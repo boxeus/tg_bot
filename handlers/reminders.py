@@ -11,6 +11,7 @@ from scheduler import scheduler
 from bot import bot
 
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
 router = Router()
@@ -285,7 +286,7 @@ async def delete_daily_reminder(message: Message, state: FSMContext):
 #-------------------------------------------Планировщик напоминаний-----------------------------------------------
 
 async def check_reminders():
-    now = datetime.now()
+    now = datetime.now(ZoneInfo("Europe/Kyiv")) # Часовой пояс (если на сервере время отличается)
     reminders = get_reminder_once()                  #вызываем функцию с database.py
     for remind in reminders:
         reminder_id = remind[0]

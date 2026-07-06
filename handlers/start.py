@@ -141,8 +141,9 @@ async def delete_notes(callback: CallbackQuery, state: FSMContext):
     else:
         for index, value in enumerate(db_notes, start = 1):
             result.append(f"{index}: {value[-1]}")
+        notes_text = "\n".join(result) # Совместимость с python 3.11
         await state.set_state(NotesState.delete_note)
-        await callback.message.answer(f"Твои заметки:\n\n{"\n".join(result)}\n\n"
+        await callback.message.answer(f"Твои заметки:\n\n{notes_text}\n\n"
                                       f"Введи номер заметки которую хочешь удалить:")
 
 @router.message(NotesState.delete_note)
